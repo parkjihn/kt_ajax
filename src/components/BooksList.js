@@ -1,12 +1,17 @@
-
 import React from 'react';
 import _ from 'lodash';
 import Book from './Book';
+import axios from 'axios';
 
 const BooksList = ({ books, setBooks }) => {
-
-  const handleRemoveBook = (id) => {
-    setBooks(books.filter((book) => book.id !== id));
+  const handleRemoveBook = async (id) => {
+    try {
+    
+      await axios.delete(`http://localhost:3001/books/${id}`);
+      setBooks(books.filter((book) => book.id !== id));
+    } catch (error) {
+      console.error('Error removing book:', error);
+    }
   };
 
   return (
